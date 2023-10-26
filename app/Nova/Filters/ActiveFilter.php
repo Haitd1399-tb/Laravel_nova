@@ -36,6 +36,7 @@ class ActiveFilter extends Filter
     public function options(NovaRequest $request)
     {
         return [
+            'Active' => 1,
             'Not Active' => 0,
         ];
     }

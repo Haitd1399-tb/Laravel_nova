@@ -11,12 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('drugs', function (Blueprint $table) {
+        Schema::create('drug_patient', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->bigInteger('price');
-            $table->text('note');
-            $table->integer('quantity')->nullable();
+            $table->unsignedBiginteger('patient_id')->unsigned();
+            $table->unsignedBiginteger('drug_id')->unsigned();
+            $table->text('note')->nullable();
+            $table->dateTime('date')->nullable();
             $table->timestamps();
         });
     }
@@ -26,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('drugs');
+        Schema::dropIfExists('drug_patient');
     }
 };

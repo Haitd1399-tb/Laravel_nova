@@ -3,30 +3,28 @@
 namespace App\Nova;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Date;
+use Laravel\Nova\Fields\Date;
 use Laravel\Nova\Fields\ID;
-use Laravel\Nova\Http\Requests\NovaRequest;
-use Laravel\Nova\Fields\Text;
-use Laravel\Nova\Fields\Number;
-use Laravel\Nova\Fields\Textarea;
-use Laravel\Nova\Fields\Currency;
 use Laravel\Nova\Fields\DateTime;
+use Laravel\Nova\Fields\Text;
+use Laravel\Nova\Fields\Textarea;
+use Laravel\Nova\Http\Requests\NovaRequest;
 
-class Drug extends Resource
+class Day extends Resource
 {
     /**
      * The model the resource corresponds to.
      *
-     * @var class-string<\App\Models\Drug>
+     * @var class-string<\App\Models\Day>
      */
-    public static $model = \App\Models\Drug::class;
+    public static $model = \App\Models\Day::class;
 
     /**
      * The single value that should be used to represent the resource when being displayed.
      *
      * @var string
      */
-    public static $title = 'name';
+    public static $title = 'at';
 
     /**
      * The columns that should be searched.
@@ -34,8 +32,7 @@ class Drug extends Resource
      * @var array
      */
     public static $search = [
-        'name',
-        'price',
+        'note',
     ];
 
     /**
@@ -48,23 +45,12 @@ class Drug extends Resource
     {
         return [
             ID::make()->sortable(),
-
-            Text::make('Tên', 'name')
-                ->rules(['required', 'min:1', 'max:255']),
-
-            Number::make('Giá tiền', 'price')
-                ->rules(['required'])
-                ->textAlign('center'),
-
-            Textarea::make('Ghi chú', 'note')
-                ->rules(['min:1']),
-
-            // Number::make('Số lượng', 'quantity')->rules(['required', 'min:0',])->textAlign('center')->nullable(),
-            DateTime::make('Ngày thêm', 'updated_at')
-                ->rules(['required'])
-                ->onlyOnDetail()
-                ->displayUsing(fn ($value) => $value->format('d/m/Y')),
-            
+            Text::make('Note')
+                ->onlyOnIndex(),
+            Textarea::make('Note')
+                ->rules(['required']),
+            DateTime::make('Updated at')
+                ->hideWhenCreating(),
         ];
     }
 
