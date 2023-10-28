@@ -2,7 +2,8 @@
 
 namespace App\Nova;
 
-use App\Models\Drug;
+use App\Nova\Drug;
+use App\Nova\Day;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\BelongsToMany;
 use Laravel\Nova\Fields\ID;
@@ -40,7 +41,7 @@ class Patient extends Resource
         'phone'
     ];
 
-        /**
+    /**
      * The pagination per-page options configured for this resource.
      *
      * @return array
@@ -70,7 +71,7 @@ class Patient extends Resource
                 ->rules(['required', 'min:1', 'max:255']),
 
             Text::make('Điên thoại', 'phone')
-            ->rules(['required', 'min:1', 'max:15']),
+                ->rules(['required', 'min:1', 'max:15']),
 
             Text::make('Ghi chú', 'note')
                 ->onlyOnIndex(),
@@ -88,13 +89,13 @@ class Patient extends Resource
 
             Boolean::make('Điều trị', 'active'),
 
-            BelongsToMany::make('Drugs')
+            BelongsToMany::make('Thuốc', 'drugs', Drug::class)
                 ->rules('required')
                 ->showCreateRelationButton()
                 ->allowDuplicateRelations()
                 ->fields(new DrugFields()),
 
-            BelongsToMany::make('Days')
+            BelongsToMany::make('Ngày điều trị', 'days', Day::class)
                 ->rules('required')
                 ->allowDuplicateRelations(),
 
