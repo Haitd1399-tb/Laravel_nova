@@ -9,9 +9,12 @@ class Patient extends Model
 {
     use HasFactory;
 
+
     public function drugs()
     {
-        return $this->belongsToMany(Drug::class);
+        return $this->belongsToMany(Drug::class)
+                    ->withPivot('note')
+                    ->withTimestamps();                 
     }
 
     public function days()
