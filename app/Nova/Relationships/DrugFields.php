@@ -18,10 +18,20 @@ class DrugFields
     {
         return [
             Textarea::make('Ghi chú', 'note')
-            ->rules(['min:1', 'max:255']),
+                ->rules('max:255')
+                ->onlyOnForms(),
 
-            DateTime::make('Ngày sử dụng', 'date')
-            ->rules(['required']),
+            Text::make('Ghi chú', 'note')
+                ->rules('max:255')
+                ->hideWhenUpdating(),
+
+            DateTime::make('Ngày sử dụng', 'created_at')
+                ->displayUsing(fn ($value) => $value->format('d/m/Y'))
+                ->exceptOnForms(),
+
+            DateTime::make('Ngày sửa đổi', 'updated_at')
+                ->displayUsing(fn ($value) => $value->format('d/m/Y'))
+                ->hideFromIndex()
         ];
     }
 }
