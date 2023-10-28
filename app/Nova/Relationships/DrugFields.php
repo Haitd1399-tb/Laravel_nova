@@ -4,6 +4,7 @@ namespace App\Nova;
 
 use Laravel\Nova\Fields\Textarea;
 use Laravel\Nova\Fields\DateTime;
+use Laravel\Nova\Fields\Text;
 
 class DrugFields
 {
@@ -23,6 +24,7 @@ class DrugFields
 
             Text::make('Ghi chú', 'note')
                 ->rules('max:255')
+                ->hideWhenCreating()
                 ->hideWhenUpdating(),
 
             DateTime::make('Ngày sử dụng', 'created_at')
@@ -31,6 +33,7 @@ class DrugFields
 
             DateTime::make('Ngày sửa đổi', 'updated_at')
                 ->displayUsing(fn ($value) => $value->format('d/m/Y'))
+                ->hideWhenCreating()
                 ->hideFromIndex()
         ];
     }

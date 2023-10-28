@@ -13,6 +13,6 @@ class DrugTableSeeder extends Seeder
      */
     public function run(): void
     {
-        Drug::factory()->count(3)->create();
+        Drug::factory()->count(50)->create();
     }
 }

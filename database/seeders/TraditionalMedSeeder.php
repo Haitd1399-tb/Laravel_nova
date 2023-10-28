@@ -13,6 +13,6 @@ class TraditionalMedSeeder extends Seeder
      */
     public function run(): void
     {
-        TraditionalMed::factory()->count(20)->create();
+        TraditionalMed::factory()->count(50)->create();
     }
 }

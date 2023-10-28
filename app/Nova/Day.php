@@ -48,8 +48,9 @@ class Day extends Resource
             Text::make('Note')
                 ->onlyOnIndex(),
             Textarea::make('Note')
-                ->rules(['required']),
+                ->rules(['max: 255']),
             DateTime::make('Updated at')
+                ->displayUsing(fn ($value) => $value->format('d/m/Y'))
                 ->hideWhenCreating(),
         ];
     }

@@ -9,6 +9,8 @@ class Day extends Model
 {
     use HasFactory;
 
+    protected $fillable = ['note'];
+
     public function patients() {
         return $this->belongsToMany(Patient::class);
     }

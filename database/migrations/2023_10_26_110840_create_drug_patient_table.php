@@ -16,7 +16,6 @@ return new class extends Migration
             $table->unsignedBiginteger('patient_id')->unsigned();
             $table->unsignedBiginteger('drug_id')->unsigned();
             $table->text('note')->nullable();
-            $table->dateTime('date')->nullable();
             $table->timestamps();
         });
     }

@@ -2,9 +2,10 @@
 
 namespace App\Nova;
 
+use App\Nova\Actions\AddDayLatest;
+use App\Nova\Actions\DeletePatient;
 use App\Nova\Drug;
 use App\Nova\Day;
-use Illuminate\Http\Request;
 use Laravel\Nova\Fields\BelongsToMany;
 use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Http\Requests\NovaRequest;
@@ -13,6 +14,9 @@ use Laravel\Nova\Fields\Number;
 use Laravel\Nova\Fields\Boolean;
 use Laravel\Nova\Fields\Textarea;
 use Laravel\Nova\Fields\Date;
+use Laravel\Nova\Actions\Action;
+use Laravel\Nova\Fields\ActionFields;
+use Illuminate\Support\Collection;
 
 class Patient extends Resource
 {
@@ -102,86 +106,6 @@ class Patient extends Resource
         ];
     }
 
-    // /**
-    //  * Get the fields displayed by the resource on create page.
-    //  *
-    //  * @param  \Laravel\Nova\Http\Requests\NovaRequest  $request
-    //  * @return array
-    //  */
-    // public function fieldsForCreate(NovaRequest $request)
-    // {
-    //     return [
-    //         Text::make('Họ và tên', 'name')->rules('required', 'min:1', 'max: 20'),
-    //         Number::make('Tuổi', 'age')->rules('required', 'max:255'),
-    //         Text::make('Địa chỉ', 'address')->rules('required', 'max:255'),
-    //         Text::make('Điện thoại', 'phone')->rules('required'),
-    //         Textarea::make('Ghi chú', 'note'),
-
-    //         BelongsToMany::make('Drugs')                
-    //             ->showCreateRelationButton()
-    //             ->allowDuplicateRelations(),
-    //         BelongsToMany::make('Days')
-    //             ->allowDuplicateRelations(),
-
-    //     ];
-    // }
-
-    //     /**
-    //  * Get the fields displayed by the resource on detail page.
-    //  *
-    //  * @param  \Laravel\Nova\Http\Requests\NovaRequest  $request
-    //  * @return array
-    //  */
-    // public function fieldsForDetail(NovaRequest $request)
-    // {
-    //     return [
-    //         ID::make()->sortable(),
-    //         Text::make('Họ và tên', 'name'),
-    //         Number::make('Tuổi', 'age'),
-    //         Text::make('Địa chỉ', 'address'),
-    //         Text::make('Điện thoại', 'phone'),
-    //         Date::make('Ngày vào','created_at')
-    //             ->displayUsing(fn ($value) => $value->format('d/m/y')),
-    //         Textarea::make('Ghi chú', 'note'),
-    //         Boolean::make('Trạng thái', 'active'),
-
-    //         BelongsToMany::make('Drugs')
-    //             ->showCreateRelationButton()
-    //             ->allowDuplicateRelations()
-    //             ->fields(fn () => [
-    //                 // ID::make()->sortable(),
-    //                 Date::make('Created At', 'created_at'),
-    //             ]),
-    //         BelongsToMany::make('Days')
-    //             // ->withSubtitles()
-    //             ->allowDuplicateRelations(),
-    //     ];
-    // }
-
-    //         /**
-    //  * Get the fields displayed by the resource on update page.
-    //  *
-    //  * @param  \Laravel\Nova\Http\Requests\NovaRequest  $request
-    //  * @return array
-    //  */
-    // public function fieldsForUpdate(NovaRequest $request)
-    // {
-    //     return [
-    //         Text::make('Name', 'name')->rules(['required', 'min:1', 'max:50']),
-    //         Number::make('Tuổi', 'age')->rules(['required', 'min:1', 'max:150']),
-    //         Text::make('Địa chỉ', 'address')->rules(['required', 'min:1', 'max:255']),
-    //         Text::make('Điện thoại', 'phone')->rules(['required', 'min:1']),
-    //         Date::make('Ngày vào', 'created_at')
-    //             ->rules('required')
-    //             ->displayUsing(fn ($value) => $value->format('d/m/y')),
-    //         Textarea::make('Ghi chú', 'note'),
-    //         Boolean::make('Active')->rules('required'),
-
-    //         BelongsToMany::make('Drugs'),
-    //         BelongsToMany::make('Days'),
-    //     ];
-    // }
-
     /**
      * Get the cards available for the request.
      *
@@ -226,6 +150,9 @@ class Patient extends Resource
      */
     public function actions(NovaRequest $request)
     {
-        return [];
+        return [
+            new DeletePatient,
+            new AddDayLatest,
+        ];
     }
 }

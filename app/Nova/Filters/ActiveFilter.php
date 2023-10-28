@@ -40,4 +40,14 @@ class ActiveFilter extends Filter
             'Not Active' => 0,
         ];
     }
+
+    /**
+     * The default value of the filter.
+     *
+     * @var string
+     */
+    public function default()
+    {
+        return true;
+    }
 }
