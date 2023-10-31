@@ -18,7 +18,6 @@ class TraditionalMedFactory extends Factory
     {
         return [
             'name' => $this->faker->text(10),
-            'weight' => 100,
             'note' => $this->faker->text(200),
         ];
     }

@@ -8,6 +8,13 @@ use Laravel\Nova\Http\Requests\NovaRequest;
 class ActiveFilter extends Filter
 {
     /**
+     * The displayable name of the filter.
+     *
+     * @var string
+     */
+    public $name = 'Điều trị';
+    
+    /**
      * The filter's component.
      *
      * @var string

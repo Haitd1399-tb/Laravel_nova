@@ -14,6 +14,10 @@ use Laravel\Nova\Fields\DateTime;
 
 class Drug extends Resource
 {
+    public static function label() {
+        return 'Thuốc Tây Y';
+    }
+
     /**
      * The model the resource corresponds to.
      *
@@ -39,6 +43,13 @@ class Drug extends Resource
     ];
 
     /**
+     * The pagination per-page options configured for this resource.
+     *
+     * @return array
+     */
+    public static $perPageOptions = [5, 10, 25, 50];
+
+    /**
      * Get the fields displayed by the resource.
      *
      * @param  \Laravel\Nova\Http\Requests\NovaRequest  $request
@@ -57,14 +68,18 @@ class Drug extends Resource
                 ->textAlign('center'),
 
             Textarea::make('Ghi chú', 'note')
-                ->rules(['min:1']),
+                ->rules(['min:1'])
+                ->showOnCreating()
+                ->showOnUpdating(),
 
-            // Number::make('Số lượng', 'quantity')->rules(['required', 'min:0',])->textAlign('center')->nullable(),
+            Text::make('Ghi chú', 'note')
+                ->onlyOnIndex(),
+
             DateTime::make('Ngày thêm', 'updated_at')
-                ->rules(['required'])
-                ->onlyOnDetail()
-                ->displayUsing(fn ($value) => $value->format('d/m/Y')),
-            
+            ->rules(['required'])
+            ->showOnDetail()
+            ->showOnIndex()
+            ->displayUsing(fn($value) => $value->format('d/m/Y')),
         ];
     }
 

@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->unsignedBiginteger('patient_id')->unsigned();
             $table->unsignedBiginteger('day_id')->unsigned();
+            $table->bigInteger('price')->nullable();
             $table->timestamps();
         });
     }

@@ -9,6 +9,13 @@ use Laravel\Nova\Http\Requests\NovaRequest;
 class CreatedAtFilter extends DateFilter
 {
     /**
+     * The displayable name of the filter.
+     *
+     * @var string
+     */
+    public $name = 'Ngày Điều Trị';
+
+    /**
      * Apply the filter to the given query.
      *
      * @param  \Laravel\Nova\Http\Requests\NovaRequest  $request

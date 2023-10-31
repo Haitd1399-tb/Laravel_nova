@@ -12,6 +12,10 @@ use Laravel\Nova\Fields\Trix;
 
 class TraditionalMed extends Resource
 {
+    public static function label() {
+        return 'Thuốc Đông Y';
+    }
+
     /**
      * The model the resource corresponds to.
      *
@@ -46,7 +50,6 @@ class TraditionalMed extends Resource
         return [
             ID::make()->sortable(),
             Text::make('Name')->rules(['required', 'min:1']),
-            Number::make('Weight')->rules(['required'])->sortable(),
             Text::make('Note')->rules(['min:1'])->hideWhenCreating(),
             Trix::make('Note')->rules(['min:1']),
         ];

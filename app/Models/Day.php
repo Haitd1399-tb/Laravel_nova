@@ -9,9 +9,10 @@ class Day extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['note'];
-
-    public function patients() {
-        return $this->belongsToMany(Patient::class);
+    public function patients() 
+    {
+        return $this->belongsToMany(Patient::class)
+                    ->withPivot('id', 'price')
+                    ->withTimestamps();
     }
 }

@@ -6,12 +6,17 @@ use Illuminate\Http\Request;
 use Laravel\Nova\Fields\Date;
 use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\DateTime;
+use Laravel\Nova\Fields\Number;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Fields\Textarea;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
 class Day extends Resource
 {
+    public static function label() {
+        return 'Ngày Điều Trị';
+    }
+
     /**
      * The model the resource corresponds to.
      *
@@ -34,6 +39,13 @@ class Day extends Resource
     public static $search = [
         'note',
     ];
+    
+    /**
+     * The pagination per-page options configured for this resource.
+     *
+     * @return array
+     */
+    public static $perPageOptions = [5, 10, 25, 50];
 
     /**
      * Get the fields displayed by the resource.
@@ -45,13 +57,17 @@ class Day extends Resource
     {
         return [
             ID::make()->sortable(),
-            Text::make('Note')
+            // Number::make('Giá tiền điều trị', 'price')
+            //     ->rules('required')
+            //     ->textAlign('center'),
+
+            DateTime::make('Ngày điều trị', 'created_at')
+                ->textAlign('center')
+                ->displayUsing(fn($value) => $value->format('d/m/Y'))
                 ->onlyOnIndex(),
-            Textarea::make('Note')
-                ->rules(['max: 255']),
-            DateTime::make('Updated at')
-                ->displayUsing(fn ($value) => $value->format('d/m/Y'))
-                ->hideWhenCreating(),
+            // DateTime::make('Updated at')
+            //     ->displayUsing(fn ($value) => $value->format('d/m/Y'))
+            //     ->hideWhenCreating(),
         ];
     }
 

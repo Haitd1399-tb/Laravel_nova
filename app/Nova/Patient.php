@@ -2,10 +2,10 @@
 
 namespace App\Nova;
 
-use App\Nova\Actions\AddDayLatest;
-use App\Nova\Actions\DeletePatient;
+use App\Nova\Actions\AddDayAction;
 use App\Nova\Drug;
 use App\Nova\Day;
+use Laravel\Nova\Actions\Action;
 use Laravel\Nova\Fields\BelongsToMany;
 use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Http\Requests\NovaRequest;
@@ -14,12 +14,13 @@ use Laravel\Nova\Fields\Number;
 use Laravel\Nova\Fields\Boolean;
 use Laravel\Nova\Fields\Textarea;
 use Laravel\Nova\Fields\Date;
-use Laravel\Nova\Actions\Action;
-use Laravel\Nova\Fields\ActionFields;
-use Illuminate\Support\Collection;
 
 class Patient extends Resource
 {
+    public static function label() {
+        return 'Bệnh Nhân';
+    }
+
     /**
      * The model the resource corresponds to.
      *
@@ -50,7 +51,13 @@ class Patient extends Resource
      *
      * @return array
      */
-    public static $perPageOptions = [5, 10, 25];
+    public static $perPageOptions = [5, 10, 25, 50];
+
+    public static function indexQuery(NovaRequest $request, $query) {
+        // adds a `tags_count` column to the query result based on 
+        // number of tags associated with this product
+        return $query->withCount('days'); 
+    }
 
     /**
      * Get the fields displayed by the resource.
@@ -62,6 +69,11 @@ class Patient extends Resource
     {
         return [
             ID::make()->sortable(),
+
+            Number::make('Số ngày điều trị', 'days_count')
+            ->textAlign('center')
+            ->onlyOnIndex()
+            ->sortable(),
 
             Text::make('Họ và tên', 'name')
                 ->rules(['required', 'min:4', 'max:50']),
@@ -101,8 +113,8 @@ class Patient extends Resource
 
             BelongsToMany::make('Ngày điều trị', 'days', Day::class)
                 ->rules('required')
+                ->fields(new DayFields())
                 ->allowDuplicateRelations(),
-
         ];
     }
 
@@ -151,8 +163,10 @@ class Patient extends Resource
     public function actions(NovaRequest $request)
     {
         return [
-            new DeletePatient,
-            new AddDayLatest,
+                Actions\AddDayAction::make()
+                    ->confirmText('Bạn chắc chắn. Muốn thêm ngày điều trị ?')
+                    ->confirmButtonText('Thêm')
+                    ->cancelButtonText("Không"),
         ];
     }
 }

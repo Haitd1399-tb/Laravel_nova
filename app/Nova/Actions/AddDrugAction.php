@@ -2,15 +2,18 @@
 
 namespace App\Nova\Actions;
 
-use App\Models\Patient;
+use Illuminate\Bus\Queueable;
+use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Support\Collection;
-use Laravel\Nova\Actions\DestructiveAction;
+use Laravel\Nova\Actions\Action;
 use Laravel\Nova\Fields\ActionFields;
 use Laravel\Nova\Http\Requests\NovaRequest;
-use App\Models\Day;
 
-class DeletePatient extends DestructiveAction
+class AddDrugAction extends Action
 {
+    use InteractsWithQueue, Queueable;
+
     /**
      * Perform the action on the given models.
      *
@@ -20,7 +23,7 @@ class DeletePatient extends DestructiveAction
      */
     public function handle(ActionFields $fields, Collection $models)
     {
-        Patient::whereKey($models->pluck('id'))->delete();
+        //
     }
 
     /**

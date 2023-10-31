@@ -29,20 +29,20 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
         Nova::withBreadcrumbs();
 
         Nova::mainMenu(fn ($request) => [
-            MenuSection::make('Patients', [
+            MenuSection::make('Bệnh Nhân', [
                 MenuItem::resource(Patient::class)
             ])->icon('user-group'),
             
-            MenuSection::make('Drugs', [
+            MenuSection::make('Thuốc', [
                 MenuItem::resource(Drug::class),
                 MenuItem::resource(TraditionalMed::class),
             ])->icon('shopping-bag')->collapsable(),
 
-            MenuSection::make('Days', [
+            MenuSection::make('Ngày', [
                 MenuItem::resource(Day::class),
             ])->icon('calendar')->collapsable(),
             
-            MenuSection::make('Setting', [
+            MenuSection::make('Cài Đặt', [
                 MenuItem::resource(User::class),
             ])->collapsable()->icon('cog'),
         ]);
