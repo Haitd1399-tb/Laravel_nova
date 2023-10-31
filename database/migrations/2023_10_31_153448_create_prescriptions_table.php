@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('prescriptions', function (Blueprint $table) {
             $table->id();
             $table->bigInteger('patient_id');
-            $table->string('title');
+            $table->string('name');
             $table->text('content')->nullable();
             $table->timestamps();
         });

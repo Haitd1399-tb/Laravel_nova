@@ -5,6 +5,7 @@ namespace App\Nova;
 use App\Nova\Actions\AddDayAction;
 use App\Nova\Drug;
 use App\Nova\Day;
+use App\Nova\Prescription;
 use Laravel\Nova\Actions\Action;
 use Laravel\Nova\Fields\BelongsToMany;
 use Laravel\Nova\Fields\ID;
@@ -14,6 +15,8 @@ use Laravel\Nova\Fields\Number;
 use Laravel\Nova\Fields\Boolean;
 use Laravel\Nova\Fields\Textarea;
 use Laravel\Nova\Fields\Date;
+use Laravel\Nova\Fields\HasMany;
+use Laravel\Nova\Fields\DateTime;
 
 class Patient extends Resource
 {
@@ -98,7 +101,7 @@ class Patient extends Resource
                 ->showOnUpdating()
                 ->showOnCreating(),
 
-            Date::make('Ngày vào', 'created_at')
+            DateTime::make('Ngày vào', 'created_at')
                 ->onlyOnIndex()
                 ->displayUsing(fn ($value) => $value->format('d/m/Y'))
                 ->sortable(),
@@ -115,7 +118,10 @@ class Patient extends Resource
             BelongsToMany::make('Ngày điều trị', 'days', Day::class)
                 ->rules('required')
                 ->fields(new DayFields())
-                ->allowDuplicateRelations()
+                ->allowDuplicateRelations(),
+
+            HasMany::make('Đơn thuốc đông y', 'prescriptions', Prescription::class)
+                ->rules('required'),
         ];
     }
 
