@@ -3,6 +3,7 @@
 namespace App\Nova;
 
 use Illuminate\Http\Request;
+use Laravel\Nova\Fields\BelongsToMany;
 use Laravel\Nova\Fields\Date;
 use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\DateTime;
@@ -47,6 +48,12 @@ class Day extends Resource
      */
     public static $perPageOptions = [5, 10, 25, 50];
 
+    public static function indexQuery(NovaRequest $request, $query) {
+        // adds a `tags_count` column to the query result based on 
+        // number of tags associated with this product
+        return $query->withCount('patients'); 
+    }
+
     /**
      * Get the fields displayed by the resource.
      *
@@ -57,14 +64,18 @@ class Day extends Resource
     {
         return [
             ID::make()->sortable(),
-            // Number::make('Giá tiền điều trị', 'price')
-            //     ->rules('required')
-            //     ->textAlign('center'),
+            Number::make('Số người điểu trị', 'patients_count')
+                ->textAlign('center')
+                ->onlyOnIndex()
+                ->sortable(),
 
             DateTime::make('Ngày điều trị', 'created_at')
                 ->textAlign('center')
                 ->displayUsing(fn($value) => $value->format('d/m/Y'))
-                ->onlyOnIndex(),
+                ->showOnIndex()
+                ->showOnDetail(),
+
+            BelongsToMany::make('Người bệnh', 'patients', patient::class)
             // DateTime::make('Updated at')
             //     ->displayUsing(fn ($value) => $value->format('d/m/Y'))
             //     ->hideWhenCreating(),

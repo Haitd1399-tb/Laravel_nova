@@ -50,7 +50,9 @@ class TraditionalMed extends Resource
         return [
             ID::make()->sortable(),
             Text::make('Name')->rules(['required', 'min:1']),
-            Text::make('Note')->rules(['min:1'])->hideWhenCreating(),
+            Text::make('Note')
+                ->hideWhenCreating()
+                ->hideFromDetail(),
             Trix::make('Note')->rules(['min:1']),
         ];
     }

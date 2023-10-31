@@ -23,4 +23,8 @@ class Patient extends Model
                     ->withPivot('price')
                     ->withTimestamps();
     }
+
+    public function prescriptions() {
+        return $this->hasMany(Prescription::class);
+    }
 }

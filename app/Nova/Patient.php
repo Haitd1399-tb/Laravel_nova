@@ -109,12 +109,13 @@ class Patient extends Resource
                 ->rules('required')
                 ->showCreateRelationButton()
                 ->allowDuplicateRelations()
+
                 ->fields(new DrugFields()),
 
             BelongsToMany::make('Ngày điều trị', 'days', Day::class)
                 ->rules('required')
                 ->fields(new DayFields())
-                ->allowDuplicateRelations(),
+                ->allowDuplicateRelations()
         ];
     }
 
