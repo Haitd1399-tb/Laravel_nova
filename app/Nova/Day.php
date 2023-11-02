@@ -30,7 +30,7 @@ class Day extends Resource
      *
      * @var string
      */
-    public static $title = 'at';
+    public static $title = 'created_at';
 
     /**
      * The columns that should be searched.
@@ -38,7 +38,8 @@ class Day extends Resource
      * @var array
      */
     public static $search = [
-        'note',
+        'note', 
+        'created_at'
     ];
     
     /**
@@ -69,7 +70,12 @@ class Day extends Resource
                 ->onlyOnIndex()
                 ->sortable(),
 
-            DateTime::make('Ngày điều trị', 'created_at')
+            Textarea::make('Ghi chứ', 'note')
+                ->showOnCreating()
+                ->showOnPreview()
+                ->hideFromIndex(),
+
+            Date::make('Ngày điều trị', 'created_at')
                 ->textAlign('center')
                 ->displayUsing(fn($value) => $value->format('d/m/Y'))
                 ->showOnIndex()

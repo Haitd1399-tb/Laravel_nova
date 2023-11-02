@@ -44,7 +44,7 @@ class Patient extends Resource
     public static $search = [
         'name',
         'address',
-        'phone'
+        'phone',
     ];
 
     /**
@@ -94,7 +94,6 @@ class Patient extends Resource
                 ->onlyOnPreview(),
 
             Textarea::make('Ghi chú', 'note')
-                ->rules(['required', 'min:1', 'max:255'])
                 ->showOnDetail()
                 ->showOnUpdating()
                 ->showOnCreating(),
@@ -115,9 +114,9 @@ class Patient extends Resource
 
             BelongsToMany::make('Ngày điều trị', 'days', Day::class)
                 ->rules('required')
-                ->fields(new DayFields())
                 ->searchable()
-                ->allowDuplicateRelations(),
+                ->showCreateRelationButton()
+                ->fields(new DayFields()),
 
             HasMany::make('Đơn thuốc đông y', 'prescriptions', Prescription::class)
                 ->rules('required'),

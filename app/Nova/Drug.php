@@ -59,11 +59,9 @@ class Drug extends Resource
         return [
             ID::make()->sortable(),
 
-            Text::make('Tên:', 'name')
-                ->rules(['required', 'min:1', 'max:255']),
+            Text::make('Tên:', 'name')->onlyOnIndex(),
 
             Textarea::make('Ghi chú:', 'note')
-                ->rules(['min:1'])
                 ->showOnCreating()
                 ->showOnUpdating()
                 ->showOnPreview(),
