@@ -27,9 +27,14 @@ class DrugFields
             Text::make('Ghi chú', 'note')
                 ->rules('max:255')
                 ->hideWhenCreating()
-                ->hideWhenUpdating(),
+                ->hideWhenUpdating(),    
+            
+            Number::make('Giá tiền', 'price')
+                ->textAlign('center')
+                ->rules('required'),
 
             DateTime::make('Ngày sử dụng', 'created_at')
+                ->textAlign('center')
                 ->displayUsing(fn ($value) => $value->format('d/m/Y'))
                 ->exceptOnForms(),
 

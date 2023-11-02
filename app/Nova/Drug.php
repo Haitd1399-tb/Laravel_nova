@@ -39,7 +39,6 @@ class Drug extends Resource
      */
     public static $search = [
         'name',
-        'price',
     ];
 
     /**
@@ -60,25 +59,20 @@ class Drug extends Resource
         return [
             ID::make()->sortable(),
 
-            Text::make('Tên', 'name')
+            Text::make('Tên:', 'name')
                 ->rules(['required', 'min:1', 'max:255']),
 
-            Number::make('Giá tiền', 'price')
-                ->rules(['required'])
-                ->textAlign('center'),
-
-            Textarea::make('Ghi chú', 'note')
+            Textarea::make('Ghi chú:', 'note')
                 ->rules(['min:1'])
                 ->showOnCreating()
-                ->showOnUpdating(),
+                ->showOnUpdating()
+                ->showOnPreview(),
 
-            Text::make('Ghi chú', 'note')
-                ->onlyOnIndex(),
-
-            DateTime::make('Ngày thêm', 'updated_at')
+            DateTime::make('Ngày thêm:', 'updated_at')
             ->rules(['required'])
+            ->hideFromIndex()
             ->showOnDetail()
-            ->showOnIndex()
+            ->showOnPreview()
             ->displayUsing(fn($value) => $value->format('d/m/Y')),
         ];
     }

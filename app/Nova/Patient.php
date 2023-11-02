@@ -2,11 +2,9 @@
 
 namespace App\Nova;
 
-use App\Nova\Actions\AddDayAction;
 use App\Nova\Drug;
 use App\Nova\Day;
 use App\Nova\Prescription;
-use Laravel\Nova\Actions\Action;
 use Laravel\Nova\Fields\BelongsToMany;
 use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Http\Requests\NovaRequest;
@@ -93,7 +91,7 @@ class Patient extends Resource
                 ->rules(['required', 'min:1', 'max:15']),
 
             Text::make('Ghi chú', 'note')
-                ->onlyOnIndex(),
+                ->onlyOnPreview(),
 
             Textarea::make('Ghi chú', 'note')
                 ->rules(['required', 'min:1', 'max:255'])
@@ -112,12 +110,13 @@ class Patient extends Resource
                 ->rules('required')
                 ->showCreateRelationButton()
                 ->allowDuplicateRelations()
-
+                ->searchable()
                 ->fields(new DrugFields()),
 
             BelongsToMany::make('Ngày điều trị', 'days', Day::class)
                 ->rules('required')
                 ->fields(new DayFields())
+                ->searchable()
                 ->allowDuplicateRelations(),
 
             HasMany::make('Đơn thuốc đông y', 'prescriptions', Prescription::class)

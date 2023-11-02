@@ -3,7 +3,6 @@
 namespace App\Providers;
 
 use Illuminate\Support\Facades\Gate;
-use Laravel\Nova\Nova;
 use Laravel\Nova\NovaApplicationServiceProvider;
 use App\Nova\Dashboards\Main;
 use App\Nova\Day;
@@ -14,6 +13,8 @@ use App\Nova\User;
 use Laravel\Nova\Menu\Menu;
 use Laravel\Nova\Menu\MenuItem;
 use Laravel\Nova\Menu\MenuSection;
+use Laravel\Nova\Nova;
+
 
 class NovaServiceProvider extends NovaApplicationServiceProvider
 {
@@ -23,7 +24,14 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
      * @return void
      */
     public function boot()
-    {
+    {   
+        Nova::userLocale(function () {
+            return match (app()->getLocale()) {
+                'en' => 'en-US',
+                default => null,
+            };
+        });
+        
         parent::boot();
 
         Nova::withBreadcrumbs();

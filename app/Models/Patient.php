@@ -13,7 +13,7 @@ class Patient extends Model
     public function drugs()
     {
         return $this->belongsToMany(Drug::class)
-                    ->withPivot('note')
+                    ->withPivot(['note', 'price'])
                     ->withTimestamps();                 
     }
 

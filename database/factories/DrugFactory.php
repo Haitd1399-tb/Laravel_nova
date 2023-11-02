@@ -18,9 +18,7 @@ class DrugFactory extends Factory
     {
         return [
             'name' => $this->faker->text(25),
-            'price' => 1000000,
             'note' => $this->faker->text(150),
-            'quantity' => 50,
         ];
     }
 }
