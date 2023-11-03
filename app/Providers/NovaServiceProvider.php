@@ -43,7 +43,7 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
             
             MenuSection::make('Thuốc', [
                 MenuItem::resource(Drug::class),
-                MenuItem::resource(TraditionalMed::class),
+                // MenuItem::resource(TraditionalMed::class),
             ])->icon('shopping-bag')->collapsable(),
 
             MenuSection::make('Ngày', [
